@@ -19,12 +19,13 @@
     "public"
   ],
   "scripts": {
-    "build": "NODE_ENV=production npm run clean && tsc",
+    "build": "NODE_ENV=production tsc",
     "build:client": "NODE_ENV=production webpack -c webpack.config.js",
-    "clean": "rm -rf dist public",
+    "clean": "rm -rf dist",
+    "clean:client": "rm -rf public",
     "dev": "npm run clean && tsc --watch",
-    "dev:client": "webpack -c webpack.config.js --watch",
-    "prepublishOnly": "npm run build:client && npm run build",
+    "dev:client": "npm run clean:client && webpack -c webpack.config.js --watch",
+    "prepublishOnly": "npm run clean && npm run clean:client && npm run build:client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
