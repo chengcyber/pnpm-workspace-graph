@@ -1,0 +1,19 @@
+{
+  "version": "0.2",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "codepaths",
+    "cytoscape",
+    "dagre",
+    "fluentui",
+    "halign",
+    "pnpx",
+    "sirv",
+    "tsbuildinfo",
+    "valign"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

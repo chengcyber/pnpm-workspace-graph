@@ -1,0 +1,5 @@
+packages:
+  - packages/config
+  - packages/components/*
+  - packages/apps/foo
+  - packages/apps/bar

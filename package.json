@@ -1,0 +1,67 @@
+{
+  "name": "pnpm-workspace-graph",
+  "version": "0.0.1",
+  "description": "A visualizer let you display pnpm workspace graph",
+  "keywords": [
+    "pnpm",
+    "workspace",
+    "graph",
+    "monorepo",
+    "visualizer"
+  ],
+  "license": "MIT",
+  "author": "Cheng Liu",
+  "main": "lib/index.js",
+  "bin": "lib/cli.js",
+  "files": [
+    "src",
+    "lib",
+    "public"
+  ],
+  "scripts": {
+    "build": "NODE_ENV=production npm run clean && tsc",
+    "build:client": "NODE_ENV=production webpack -c webpack.config.js",
+    "clean": "rm -rf dist public",
+    "dev": "npm run clean && tsc --watch",
+    "dev:client": "webpack -c webpack.config.js --watch",
+    "prepublishOnly": "npm run build:client && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@pnpm/filter-workspace-packages": "^5.0.9",
+    "@pnpm/find-workspace-packages": "^4.0.9",
+    "@pnpm/logger": "^4.0.0",
+    "chalk": "4.1.2",
+    "commander": "^9.3.0",
+    "lodash": "^4.17.21",
+    "opener": "^1.5.2",
+    "react-hook-form": "^7.31.3",
+    "sirv": "^2.0.2",
+    "ws": "^8.7.0"
+  },
+  "devDependencies": {
+    "@fluentui/react": "^8.72.1",
+    "@fluentui/react-hooks": "^8.5.5",
+    "@types/cytoscape": "^3.19.4",
+    "@types/cytoscape-dagre": "^2.3.0",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^17.0.38",
+    "@types/opener": "^1.4.0",
+    "@types/react": "^17.0.45",
+    "@types/react-dom": "^17.0.17",
+    "@types/ws": "^8.5.3",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
+    "add": "^2.0.6",
+    "cytoscape": "^3.21.1",
+    "cytoscape-dagre": "^2.4.0",
+    "eslint": "^8.17.0",
+    "pkgs-graph": "^7.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.7.2",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}

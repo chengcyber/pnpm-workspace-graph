@@ -1,0 +1,18 @@
+{
+  "name": "foo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Cheng Liu",
+  "license": "ISC",
+  "dependencies": {
+    "ui": "1.0.0"
+  },
+  "devDependencies": {
+    "config": "workspace:*"
+  }
+}
