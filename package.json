@@ -18,6 +18,10 @@
     "lib",
     "public"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chengcyber/pnpm-workspace-graph.git"
+  },
   "scripts": {
     "build": "NODE_ENV=production tsc",
     "build:client": "NODE_ENV=production webpack -c webpack.config.js",
