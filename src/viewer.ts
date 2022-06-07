@@ -3,6 +3,7 @@ import sirv from "sirv";
 import WebSocket from "ws";
 import chalk from "chalk";
 import findWorkspacePackages from "@pnpm/find-workspace-packages";
+import detect from "detect-port";
 import Logger from "./Logger";
 import { open } from "./utils";
 import { projectRoot } from "./paths";
@@ -76,6 +77,12 @@ class ViewerServer {
   public startServer = async () => {
     if (this._server) {
       return;
+    }
+
+    const _port = await detect(this._port);
+    if (this._port !== _port) {
+      this._logger.error(redBright(`Port ${this._port} is already in use.`));
+      process.exit(1);
     }
 
     if (!this._viewerData) {
