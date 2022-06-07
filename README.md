@@ -15,7 +15,27 @@ visit http://localhost:8888 to see the graph
 
 ## `-C, --cwd`
 
+Default: `process.cwd()`
+
 Specify working directory, this directory must contains `pnpm-workspace.yaml` file.
+
+## `-h, --host`
+
+Default: `127.0.0.1`
+
+Specify host.
+
+## `-p --port`
+
+Default: `8888`
+
+Specify port.
+
+## `-o --open`
+
+Default: `true`
+
+Whether to open browser after server started.
 
 # Development in local
 
