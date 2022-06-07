@@ -14,7 +14,7 @@ or specify another workspace directory
 pnpx pnpm-workspace-graph -C <your-workspace-dir>
 ```
 
-visit http://localhost:8888 to see the graph
+visit http://localhost:8188 to see the graph
 
 # CLI parameters
 
@@ -32,7 +32,7 @@ Specify host.
 
 ## `-p --port`
 
-Default: `8888`
+Default: `8188`
 
 Specify port.
 

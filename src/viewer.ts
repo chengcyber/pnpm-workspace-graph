@@ -36,7 +36,7 @@ class ViewerServer {
   private _wss: WebSocket.Server | undefined;
 
   public constructor(opts: ViewerServerOptions = {}) {
-    this._port = opts.port || 8888;
+    this._port = opts.port || 8188;
     this._host = opts.host || "127.0.0.1";
     this._cwd = opts.cwd || process.cwd();
     this._openBrowser = opts.open || true;

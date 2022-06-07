@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { program } from "commander";
+import { InvalidArgumentError, program } from "commander";
 import path from "path";
 import { startServer } from "./index";
 import { projectRoot } from "./paths";
@@ -16,7 +16,19 @@ async function main() {
     .version(version)
     .option("-C, --cwd <cwd>", "working directory", process.cwd())
     .option("-h, --host <host>", "host", "127.0.0.1")
-    .option("-p, --port <port>", "port", "8888")
+    .option<number>(
+      "-p, --port <port>",
+      "port",
+      (value: string) => {
+        // parseInt takes a string and a radix
+        const parsedValue = parseInt(value, 10);
+        if (isNaN(parsedValue)) {
+          throw new InvalidArgumentError("Not a number.");
+        }
+        return parsedValue;
+      },
+      8188
+    )
     .option("-o, --open", "open browser", true)
     .action(async (opts) => {
       await startServer(opts);
