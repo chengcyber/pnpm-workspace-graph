@@ -51,3 +51,7 @@ pnpm dev  # in another shell
 
 node lib/cli.js -C fixture/basic  # basic demo
 ```
+
+# LICENSE
+
+MIT @[chengcyber](https://github.com/chengcyber)
