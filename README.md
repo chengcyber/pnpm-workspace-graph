@@ -43,4 +43,6 @@ Whether to open browser after server started.
 pnpm install
 pnpm dev:client
 pnpm dev  # in another shell
+
+node lib/cli.js -C fixture/basic  # basic demo
 ```
