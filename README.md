@@ -4,8 +4,13 @@ A visualizer let you display pnpm workspace graph
 
 # Usage
 
-```
+```shell
 pnpx pnpm-workspace-graph
+```
+
+or specify another workspace directory
+
+```shell
 pnpx pnpm-workspace-graph -C <your-workspace-dir>
 ```
 
