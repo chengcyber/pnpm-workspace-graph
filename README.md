@@ -38,15 +38,15 @@ Visualize project relationships in your [PNPM](https://pnpm.io/) workspace
 
 3. A typical monorepo will have too many projects to meaningfully visualize.  When the web browser page appears, click the `[Open Panel]` button and use PNPM's `--filter` syntax to select the subset of projects that you are interested in:
 
-   <img src="assets/example-settings.png" style="max-width: 700px;" alt="Settings Panel" />
-   <p><i>Using the Settings Panel to select a subset of projects</i></p>
+   <kbd><img src="assets/example-settings.png" alt="Settings Panel" /></kbd>
+   <p align="center"><i>Using the Settings Panel to select a subset of projects</i></p>
 
    In separate boxes, enter the full package names to be analyzed.  They must be local workspace projects from `pnpm-workspace.yaml`.  To indicate all workspace projects that are dependencies of `my-package`, specify `...my-package`.  To indicate all workspace projects that depend on `my-package`, specify `my-package...`.  Refer to the [PNPM documentation](https://pnpm.io/filtering) for more information about the `--filter` syntax.
 
 4. After you have selected a subset of projects, click the `X` to close the Settings Panel.  Using the mouse, you can move the nodes to make a nice presentation. Use the mouse wheel to zoom in or out.
 
-   <img src="assets/example-graph.png" style="max-width: 700px;" alt="Example graph" />
-   <p><i>An example graph made by cloning the <a href="https://github.com/pnpm/pnpm">https://github.com/pnpm/pnpm</a> workspace</i></p>
+   <kbd><img src="assets/example-graph.png" style="max-width: 700px;" alt="Example graph" /></kbd>
+   <p align="center"><i>An example graph made by cloning the <a href="https://github.com/pnpm/pnpm">https://github.com/pnpm/pnpm</a> workspace</i></p>
 
 
 ## CLI parameters
