@@ -16,34 +16,49 @@ Visualize project relationships in your [PNPM](https://pnpm.io/) workspace
    If your monorepo is using a regular [PNPM workspace](https://pnpm.io/workspaces):
 
    ```shell
+   # This is the folder where you cloned your repo:
    $ cd my-pnpm-monorepo
+
+   # Launch the app in your web browser
    $ pnpm-workspace-graph
 
    pnpm-workspace-graph is started at http://127.0.0.1:8188
    Use Ctrl+C to close it
    ```
 
-   If your monorepo is using a [Rush workspace for PNPM](https://rushjs.io/pages/maintainer/package_managers/), the  `pnpm-workspace.yaml` file is generated in the `common/temp` folder:
+   If your monorepo is using a [Rush workspace for PNPM](https://rushjs.io/pages/maintainer/package_managers/):
 
    ```shell
+   # This is the folder where you cloned your repo:
    $ cd my-rush-monorepo
+
+   # Rush's pnpm-workspace.yaml is located in the "common/temp" folder.
+   # Run "rush install" to ensure it has been generated and is up to date.
+   #
+   # IMPORTANT: Your rush.json config file must specify useWorkspaces=true
    $ rush install
 
-   # NOTE: Ensure that useWorkspaces=true in your rush.json config file
+   # Launch the app in your web browser, specifying to use "common/temp"
    $ pnpm-workspace-graph --cwd common/temp
 
    pnpm-workspace-graph is started at http://127.0.0.1:8188
    Use Ctrl+C to close it
    ```
 
-3. A typical monorepo will have too many projects to meaningfully visualize.  When the web browser page appears, click the `[Open Panel]` button and use PNPM's `--filter` syntax to select the subset of projects that you are interested in:
+3. When the app page appears in your web browser appears, click the `[Open Panel]` button:
 
    <kbd><img src="assets/example-settings.png" alt="Settings Panel" /></kbd>
    <p align="center"><i>Using the Settings Panel to select a subset of projects</i></p>
 
-   In separate boxes, enter the full package names to be analyzed.  They must be local workspace projects from `pnpm-workspace.yaml`.  To indicate all workspace projects that are dependencies of `my-package`, specify `...my-package`.  To indicate all workspace projects that depend on `my-package`, specify `my-package...`.  Refer to the [PNPM documentation](https://pnpm.io/filtering) for more information about the `--filter` syntax.
+   A typical monorepo will have too many projects to be meaningfully visualized.  The app allows you to use PNPM's `--filter` syntax to select a subset of projects that you are interested in visualizing.  In separate input boxes, enter the names of the projects to be included in the view.  They must be workspace projects referenced by `pnpm-workspace.yaml`. Specify the full name as it appears in the **package.json** `"name"` field.
 
-4. After you have selected a subset of projects, click the `X` to close the Settings Panel.  Using the mouse, you can move the nodes to make a nice presentation. Use the mouse wheel to zoom in or out.
+   To include all workspace projects that are dependencies of `my-package`, specify: `...my-package`
+
+   To indicate all workspace projects that depend on `my-package`, specify: `my-package...`
+
+   Refer to the [PNPM documentation](https://pnpm.io/filtering) for more information about the `--filter` syntax.
+
+4. After you have selected a subset of projects, click the `[X]` to close the Settings Panel.  Using the mouse, you can move the nodes to make a nice arrangement. Use the mouse wheel to zoom in or out.
 
    <kbd><img src="assets/example-graph.png" style="max-width: 700px;" alt="Example graph" /></kbd>
    <p align="center"><i>An example graph made by cloning the <a href="https://github.com/pnpm/pnpm">https://github.com/pnpm/pnpm</a> workspace</i></p>
@@ -52,7 +67,7 @@ Visualize project relationships in your [PNPM](https://pnpm.io/) workspace
 ## CLI parameters
 
 ```shell
-$ pnpm --help
+$ pnpm-workspace-graph --help
 
 Usage: pnpm-workspace-graph [options]
 
