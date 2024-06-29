@@ -38,7 +38,7 @@ export const renderClient = ({
             var socketUrl = protocol + location.host + '/';
             var socket = new WebSocket(socketUrl, 'pnpm-workspace-graph');
             window.ws = socket;
-            console.log('[PWG] WebScoket is running...');
+            console.log('[PWG] WebSocket is running...');
           })()
         } else {
           console.log('[PWG] WebSocket is not supported.');
