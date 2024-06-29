@@ -1,6 +1,6 @@
 {
   "name": "pnpm-workspace-graph",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Visualize project relationships in your PNPM workspace",
   "keywords": [
     "pnpm",
