@@ -47,7 +47,7 @@ Visualize project relationships in your [PNPM](https://pnpm.io/) workspace
    Use Ctrl+C to close it
    ```
 
-3. When the app page appears in your web browser appears, click the `[Open Panel]` button:
+3. When the app page appears in your web browser appears, click the `Filter` button:
 
    <kbd><img src="assets/example-settings.png" alt="Settings Panel" /></kbd>
    <p align="center"><i>Using the Settings Panel to select a subset of projects</i></p>

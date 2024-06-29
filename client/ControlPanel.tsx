@@ -111,7 +111,7 @@ export const ControlPanel = () => {
               <InfoLabel
                 info={
                   <div>
-                    See{" "}
+                    This points to PNPM's "--filter" syntax to select a subset of projects. See{" "}
                     <a
                       href="https://pnpm.io/filtering#matching"
                       target="_blank"
