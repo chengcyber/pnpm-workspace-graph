@@ -1,6 +1,6 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 import { GraphService } from "./service/Graph";
-import { BridgeService } from './service/Bridge';
+import { BridgeService } from "./service/Bridge";
 
 const gs = GraphService.getInstance();
 const bridge = BridgeService.getInstance();
@@ -13,8 +13,11 @@ export const GraphRender = () => {
     gs.showAllProjects();
   }, [viewerData]);
   return (
-    <div id="graph-render" style={{
-      flexGrow: 1,
-    }}></div>
-  )
-}
+    <div
+      id="graph-render"
+      style={{
+        flexGrow: 1,
+      }}
+    ></div>
+  );
+};

@@ -9,11 +9,25 @@ class BridgeService {
     if (window.ws) {
       window.ws.addEventListener("message", (event) => {
         const msg = JSON.parse(event.data.toString());
-        if (msg.command === "viewerDataUpdated") {
-          const viewerData = msg.data;
-          if (viewerData) {
-            window.viewerData = viewerData;
-            this._setViewerData?.(viewerData);
+        switch (msg.command) {
+          case "viewerDataUpdated": {
+            const viewerData = msg.data;
+            if (viewerData) {
+              window.viewerData = viewerData;
+              this._setViewerData?.(viewerData);
+            }
+            break;
+          }
+          case "reportError": {
+            const errorMessage = msg.data.errorMessage
+            if (errorMessage) {
+              console.error(`Receive error from server: ${errorMessage}`);
+            }
+            break;
+          }
+          default: {
+            console.error(`Unsupported command type ${msg.command}`);
+            break;
           }
         }
       });

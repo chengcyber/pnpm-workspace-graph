@@ -1,96 +1,193 @@
-import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
-import { Panel, PanelType } from '@fluentui/react/lib/Panel';
-import { useBoolean, useId } from '@fluentui/react-hooks';
-import { FieldValues, FormProvider, useForm } from 'react-hook-form';
-import { ControlledTextFieldArray } from './ControlledFormComponent/ControlledTextFieldArray';
-import { ITooltipHostStyles, Label, TooltipHost, } from '@fluentui/react';
-import { GraphService } from './service/Graph';
+import {
+  Button,
+  Drawer,
+  DrawerHeader,
+  DrawerHeaderTitle,
+  InfoLabel,
+  DrawerBody,
+  Text,
+  Toolbar,
+} from "@fluentui/react-components";
+import {
+  ChevronLeft20Regular,
+  ChevronRight20Regular,
+  DataFunnel20Regular,
+  Dismiss24Regular,
+  Save20Regular,
+  SpinnerIos20Regular,
+} from "@fluentui/react-icons";
+import { useBoolean } from "@fluentui/react-hooks";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import { saveAs } from 'file-saver';
+import { ControlledTextFieldArray } from "./ControlledFormComponent/ControlledTextFieldArray";
+import { GraphService } from "./service/Graph";
+import { useState } from "react";
 
 const gs = GraphService.getInstance();
 
 export const ControlPanel = () => {
-  const [isOpen, { setTrue: openPanel, setFalse: dismissPanel }] = useBoolean(false);
+  const [isOpen, { setTrue: openPanel, setFalse: dismissPanel }] =
+    useBoolean(true);
+  const [isExpandActions, { toggle: toggleExpandActions }] = useBoolean(true);
+  const [isExportingImage, setIsExportImage] = useState(false);
+
+  const onSave = () => {
+    console.log("on save");
+    setIsExportImage(true);
+    const blobPromise = gs.exportToPNG();
+    if (!blobPromise) {
+      console.log('Save failed, cy not initialized');
+      setIsExportImage(false);
+      return;
+    }
+
+    blobPromise.then((blob: Blob) => {
+      saveAs(blob, `pnpm-workspace-graph.png`)
+    }).catch((error) => {
+      console.log('Error exporting image:', error);
+    }).finally(() => {
+      setIsExportImage(false);
+    })
+  };
 
   const defaultFilter = [
     {
-      value: '',
-    }
+      value: "",
+    },
   ];
 
   const defaultValues: FieldValues = {
     filter: defaultFilter,
-  }
+  };
 
   const form = useForm({
     defaultValues,
     shouldFocusError: true,
-    shouldUnregister: true
+    shouldUnregister: true,
   });
   const { control, reset, handleSubmit } = form;
 
   const onSubmit = (data: FieldValues) => {
-    gs.setFilter(data.filter.map((f: { value: string }) => f.value.trim()).filter(Boolean));
-  }
+    gs.setFilter(
+      data.filter.map((f: { value: string }) => f.value.trim()).filter(Boolean)
+    );
+  };
 
-  const tooltipId = useId('tooltip');
-  const calloutProps = { gapSpace: 0 };
-  // The TooltipHost root uses display: inline by default.
-  // If that's causing sizing issues or tooltip positioning issues, try overriding to inline-block.
-  const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
-
-  return <div style={{
-    position: 'relative',
-  }}>
-    <Panel
-      headerText="Control Panel"
-      isOpen={isOpen}
-      onDismiss={dismissPanel}
-      // You MUST provide this prop! Otherwise screen readers will just say "button" with no label.
-      closeButtonAriaLabel="Close"
-      type={PanelType.large}
-      isLightDismiss={true}
-      isHiddenOnDismiss={true}
+  return (
+    <div
+      style={{
+        position: "relative",
+      }}
     >
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Label id="filter" >
-            <TooltipHost
-              content={
-                <div>
-                  See <a href="https://pnpm.io/filtering#matching" target="_blank">https://pnpm.io/filtering#matching</a>
-                </div>
-              }
-              // This id is used on the tooltip itself, not the host
-              // (so an element with this id only exists when the tooltip is shown)
-              id={tooltipId}
-              calloutProps={calloutProps}
-              styles={hostStyles}
-            >
-              {'--filter'}
-            </TooltipHost>
-          </Label>
-          <div style={{ marginBottom: 6 }}>
-            <ControlledTextFieldArray
-              name='filter'
-              control={control}
-            />
-          </div>
-          <PrimaryButton style={{ marginRight: 6 }} text="Search" type="submit" />
-          <DefaultButton text="Clear" onClick={() => {
-            gs.setFilter([]);
-            reset(defaultValues);
-          }} />
-        </form>
-      </FormProvider>
-    </Panel>
-    <div style={{
-      position: 'absolute',
-      top: 20,
-      left: 20,
-      zIndex: 1,
-      display: isOpen ? 'none' : 'block',
-    }} onClick={openPanel}>
-      <DefaultButton text="Open panel" onClick={openPanel} />
+      <Drawer
+        open={isOpen}
+        size="medium"
+        position="bottom"
+        onOpenChange={(_, { open }) => {
+          if (open) {
+            openPanel();
+          } else {
+            dismissPanel();
+          }
+        }}
+      >
+        <DrawerHeader>
+          <DrawerHeaderTitle
+            action={
+              <Button
+                appearance="subtle"
+                aria-label="Close"
+                icon={<Dismiss24Regular />}
+                onClick={dismissPanel}
+              />
+            }
+          >
+            Filter Settings
+          </DrawerHeaderTitle>
+        </DrawerHeader>
+        <DrawerBody>
+          <FormProvider {...form}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <InfoLabel
+                info={
+                  <div>
+                    See{" "}
+                    <a
+                      href="https://pnpm.io/filtering#matching"
+                      target="_blank"
+                    >
+                      https://pnpm.io/filtering#matching
+                    </a>
+                  </div>
+                }
+              >
+                <Text size={400}>--filter</Text>
+              </InfoLabel>
+              <div style={{ marginBottom: 6 }}>
+                <ControlledTextFieldArray name="filter" control={control} />
+              </div>
+              <Button
+                appearance="primary"
+                style={{ marginRight: 6 }}
+                type="submit"
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  gs.setFilter([]);
+                  reset(defaultValues);
+                }}
+              >
+                Clear
+              </Button>
+            </form>
+          </FormProvider>
+        </DrawerBody>
+      </Drawer>
+      <div
+        style={{
+          position: "absolute",
+          top: 20,
+          left: 20,
+          zIndex: 1,
+          display: isOpen ? "none" : "block",
+        }}
+      >
+        <Toolbar>
+          <Button
+            appearance="subtle"
+            icon={
+              isExpandActions ? (
+                <ChevronLeft20Regular />
+              ) : (
+                <ChevronRight20Regular />
+              )
+            }
+            title={
+              isExpandActions ? "Collapse Action Bar" : "Expand Action Bar"
+            }
+            onClick={toggleExpandActions}
+          />
+          <Button
+            appearance="subtle"
+            icon={<DataFunnel20Regular />}
+            title="Filter Settings"
+            onClick={openPanel}
+          >
+            {isExpandActions ? "Filter" : ""}
+          </Button>
+          <Button
+            appearance="subtle"
+            icon={isExportingImage ? <SpinnerIos20Regular /> : <Save20Regular />}
+            disabled={isExportingImage}
+            title="Save"
+            onClick={onSave}
+          >
+            {isExpandActions ? "Save" : ""}
+          </Button>
+        </Toolbar>
+      </div>
     </div>
-  </div >
-}
+  );
+};

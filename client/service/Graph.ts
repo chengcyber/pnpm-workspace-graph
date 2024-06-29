@@ -102,6 +102,15 @@ class GraphService {
     );
   };
 
+  public exportToPNG(): Promise<Blob> | undefined {
+    if (this._fgGraph) {
+      return this._fgGraph.png({
+        full: true,
+        output: 'blob-promise'
+      });
+    }
+  }
+
   private _renderGraph = (elements: cy.Collection): void => {
     // clear fg
     if (this._fgGraph) {

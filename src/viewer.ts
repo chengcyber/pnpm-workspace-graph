@@ -61,15 +61,31 @@ class ViewerServer {
     if (!this._wss) {
       return;
     }
-    const viewerData = await this._createViewerData(filter);
+    let viewerData: ViewerData | undefined;
+    let filterErrorMessage: string | undefined;
+    try {
+      viewerData = await this._createViewerData(filter);
+    } catch(e) {
+      filterErrorMessage = (e as Error).message;
+    }
     this._wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(
-          JSON.stringify({
-            command: "viewerDataUpdated",
-            data: viewerData,
-          })
-        );
+        if (filterErrorMessage) {
+          client.send(JSON.stringify({
+            command: 'reportError',
+            data: {
+              errorMessage: filterErrorMessage
+            }
+          }));
+        }
+        if (viewerData) {
+          client.send(
+            JSON.stringify({
+              command: "viewerDataUpdated",
+              data: viewerData,
+            })
+          );
+        }
       }
     });
   };
