@@ -27,7 +27,7 @@ const gs = GraphService.getInstance();
 
 export const ControlPanel = () => {
   const [isOpen, { setTrue: openPanel, setFalse: dismissPanel }] =
-    useBoolean(true);
+    useBoolean(false);
   const [isExpandActions, { toggle: toggleExpandActions }] = useBoolean(true);
   const [isExportingImage, setIsExportImage] = useState(false);
 
