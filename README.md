@@ -1,4 +1,4 @@
-<img title="logo" src="assets/pwg-log.png" width="380" alt="pwg-logo">
+<img title="logo" src="assets/pwg-logo.png" width="380" alt="pwg-logo">
 
 # pnpm-workspace-graph
 
