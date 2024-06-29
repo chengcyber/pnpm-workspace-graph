@@ -1,5 +1,11 @@
 # pnpm-workspace-graph
 
+## 0.1.1
+
+### Patch Changes
+
+- Fix default value of control panel
+
 ## 0.1.0
 
 ### Minor Changes
