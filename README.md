@@ -1,3 +1,5 @@
+<img title="logo" src="assets/pwg-log.png" width="380" alt="pwg-logo">
+
 # pnpm-workspace-graph
 
 Visualize project relationships in your [PNPM](https://pnpm.io/) workspace
