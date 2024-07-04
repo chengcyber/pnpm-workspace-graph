@@ -1,5 +1,11 @@
 # pnpm-workspace-graph
 
+## 0.2.0
+
+### Minor Changes
+
+- 0c773e2: Support change direction: Top to Bottom or Left to Right
+
 ## 0.1.3
 
 ### Patch Changes
