@@ -66,6 +66,18 @@ Visualize project relationships in your [PNPM](https://pnpm.io/) workspace
    <p align="center"><i>An example graph made by cloning the <a href="https://github.com/pnpm/pnpm">https://github.com/pnpm/pnpm</a> workspace</i></p>
 
 
+## Features
+
+1. Layout the graph with different directions: Top to Bottom or Left to Right.
+
+Top to Bottom              |  Left to Right
+:-------------------------:|:-------------------------:
+<kbd><img src="assets/direction-tb.png" /></kbd>  | <kbd><img src="assets/direction-lr.png" /></kbd>
+
+2. Save the graph to PNG for later use.
+
+<kbd><img src="assets/save-graph.png" /></kbd>
+
 ## CLI parameters
 
 ```shell
