@@ -79,7 +79,6 @@ export const ControlledTextFieldArray = (
                           value={value}
                           onBlur={onBlur}
                           name={fieldName}
-                          contentAfter={error && error.message}
                         />
                         {
                           error ? (

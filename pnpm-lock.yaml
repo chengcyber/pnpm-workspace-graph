@@ -116,7 +116,7 @@ devDependencies:
     specifier: ^17.0.2
     version: 17.0.2(react@17.0.2)
   react-hook-form:
-    specifier: ^7.31.3
+    specifier: 7.31.3
     version: 7.31.3(react@17.0.2)
   rimraf:
     specifier: ^3.0.2

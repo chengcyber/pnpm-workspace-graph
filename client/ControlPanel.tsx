@@ -18,12 +18,18 @@ import {
 } from "@fluentui/react-icons";
 import { useBoolean } from "@fluentui/react-hooks";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { saveAs } from 'file-saver';
+import { saveAs } from "file-saver";
 import { ControlledTextFieldArray } from "./ControlledFormComponent/ControlledTextFieldArray";
 import { GraphService } from "./service/Graph";
 import { useState } from "react";
 
 const gs = GraphService.getInstance();
+
+const defaultFilter = [
+  {
+    value: "",
+  },
+];
 
 export const ControlPanel = () => {
   const [isOpen, { setTrue: openPanel, setFalse: dismissPanel }] =
@@ -36,29 +42,26 @@ export const ControlPanel = () => {
     setIsExportImage(true);
     const blobPromise = gs.exportToPNG();
     if (!blobPromise) {
-      console.log('Save failed, cy not initialized');
+      console.log("Save failed, cy not initialized");
       setIsExportImage(false);
       return;
     }
 
-    blobPromise.then((blob: Blob) => {
-      saveAs(blob, `pnpm-workspace-graph.png`)
-    }).catch((error) => {
-      console.log('Error exporting image:', error);
-    }).finally(() => {
-      setIsExportImage(false);
-    })
+    blobPromise
+      .then((blob: Blob) => {
+        saveAs(blob, `pnpm-workspace-graph.png`);
+      })
+      .catch((error) => {
+        console.log("Error exporting image:", error);
+      })
+      .finally(() => {
+        setIsExportImage(false);
+      });
   };
 
-  const defaultFilter = [
-    {
-      value: "",
-    },
-  ];
-
-  const defaultValues: FieldValues = {
+  const [defaultValues, setDefaultValues] = useState<FieldValues>({
     filter: defaultFilter,
-  };
+  });
 
   const form = useForm({
     defaultValues,
@@ -68,9 +71,13 @@ export const ControlPanel = () => {
   const { control, reset, handleSubmit } = form;
 
   const onSubmit = (data: FieldValues) => {
-    gs.setFilter(
-      data.filter.map((f: { value: string }) => f.value.trim()).filter(Boolean)
-    );
+    const filter: string[] = data.filter
+      .map((f: { value: string }) => f.value.trim())
+      .filter(Boolean);
+    gs.setFilter(filter);
+    setDefaultValues({
+      ...data,
+    });
   };
 
   return (
@@ -79,6 +86,54 @@ export const ControlPanel = () => {
         position: "relative",
       }}
     >
+      <div
+        style={{
+          position: "absolute",
+          top: 20,
+          left: 20,
+          zIndex: 1,
+          display: isOpen ? "none" : "block",
+        }}
+      >
+        <Toolbar>
+          <Button
+            appearance="subtle"
+            icon={
+              isExpandActions ? (
+                <ChevronLeft20Regular />
+              ) : (
+                <ChevronRight20Regular />
+              )
+            }
+            title={
+              isExpandActions ? "Collapse Action Bar" : "Expand Action Bar"
+            }
+            onClick={toggleExpandActions}
+          />
+          <Button
+            appearance="subtle"
+            icon={<DataFunnel20Regular />}
+            title="Filter Settings"
+            onClick={() => {
+              openPanel();
+              form.reset(defaultValues);
+            }}
+          >
+            {isExpandActions ? "Filter" : ""}
+          </Button>
+          <Button
+            appearance="subtle"
+            icon={
+              isExportingImage ? <SpinnerIos20Regular /> : <Save20Regular />
+            }
+            disabled={isExportingImage}
+            title="Save"
+            onClick={onSave}
+          >
+            {isExpandActions ? "Save" : ""}
+          </Button>
+        </Toolbar>
+      </div>
       <Drawer
         open={isOpen}
         size="medium"
@@ -111,7 +166,8 @@ export const ControlPanel = () => {
               <InfoLabel
                 info={
                   <div>
-                    This points to PNPM's "--filter" syntax to select a subset of projects. See{" "}
+                    This points to PNPM's "--filter" syntax to select a subset
+                    of projects. See{" "}
                     <a
                       href="https://pnpm.io/filtering#matching"
                       target="_blank"
@@ -136,7 +192,9 @@ export const ControlPanel = () => {
               <Button
                 onClick={() => {
                   gs.setFilter([]);
-                  reset(defaultValues);
+                  reset({
+                    filter: defaultFilter,
+                  });
                 }}
               >
                 Clear
@@ -145,49 +203,6 @@ export const ControlPanel = () => {
           </FormProvider>
         </DrawerBody>
       </Drawer>
-      <div
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          zIndex: 1,
-          display: isOpen ? "none" : "block",
-        }}
-      >
-        <Toolbar>
-          <Button
-            appearance="subtle"
-            icon={
-              isExpandActions ? (
-                <ChevronLeft20Regular />
-              ) : (
-                <ChevronRight20Regular />
-              )
-            }
-            title={
-              isExpandActions ? "Collapse Action Bar" : "Expand Action Bar"
-            }
-            onClick={toggleExpandActions}
-          />
-          <Button
-            appearance="subtle"
-            icon={<DataFunnel20Regular />}
-            title="Filter Settings"
-            onClick={openPanel}
-          >
-            {isExpandActions ? "Filter" : ""}
-          </Button>
-          <Button
-            appearance="subtle"
-            icon={isExportingImage ? <SpinnerIos20Regular /> : <Save20Regular />}
-            disabled={isExportingImage}
-            title="Save"
-            onClick={onSave}
-          >
-            {isExpandActions ? "Save" : ""}
-          </Button>
-        </Toolbar>
-      </div>
     </div>
   );
 };

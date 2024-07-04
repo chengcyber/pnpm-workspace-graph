@@ -71,7 +71,7 @@
     "pkgs-graph": "^7.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.31.3",
+    "react-hook-form": "7.31.3",
     "rimraf": "^3.0.2",
     "ts-loader": "^9.3.0",
     "typescript": "^4.7.2",
