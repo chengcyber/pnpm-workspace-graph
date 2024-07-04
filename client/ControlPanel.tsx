@@ -9,6 +9,8 @@ import {
   Toolbar,
 } from "@fluentui/react-components";
 import {
+  ArrowDown20Regular,
+  ArrowRight20Filled,
   ChevronLeft20Regular,
   ChevronRight20Regular,
   DataFunnel20Regular,
@@ -21,7 +23,7 @@ import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { saveAs } from "file-saver";
 import { ControlledTextFieldArray } from "./ControlledFormComponent/ControlledTextFieldArray";
 import { GraphService } from "./service/Graph";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const gs = GraphService.getInstance();
 
@@ -36,6 +38,28 @@ export const ControlPanel = () => {
     useBoolean(false);
   const [isExpandActions, { toggle: toggleExpandActions }] = useBoolean(true);
   const [isExportingImage, setIsExportImage] = useState(false);
+
+  const [direction, setDirection] = useState<'TB' | 'LR'>(gs.getLayoutConfig().rankDir || 'TB');
+  let directionIcon = null; 
+  if (direction === 'TB') {
+    directionIcon = <ArrowDown20Regular />
+  } else if (direction === 'LR') {
+    directionIcon = <ArrowRight20Filled />
+  }
+  const directionText: string = direction === 'LR' ? 'Left to Right' : 'Top to Bottom'
+  const toggleDirection = () => {
+    if (direction === 'TB') {
+      setDirection('LR')
+      gs.setLayoutConfig({
+        rankDir: 'LR',
+      })
+    } else {
+      setDirection('TB')
+      gs.setLayoutConfig({
+        rankDir: 'TB',
+      })
+    }
+  }
 
   const onSave = () => {
     console.log("on save");
@@ -120,6 +144,14 @@ export const ControlPanel = () => {
             }}
           >
             {isExpandActions ? "Filter" : ""}
+          </Button>
+          <Button
+            appearance="subtle"
+            icon={directionIcon}
+            title="Direction"
+            onClick={toggleDirection}
+          >
+            {isExpandActions ? directionText : ''}
           </Button>
           <Button
             appearance="subtle"

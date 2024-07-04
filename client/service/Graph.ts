@@ -1,5 +1,5 @@
 import cy from "cytoscape";
-import dagre from "cytoscape-dagre";
+import dagre, { DagreLayoutOptions } from "cytoscape-dagre";
 import { cyGraphStyle } from "../style/graph";
 import { ViewerData } from "../types";
 import { BridgeService } from "./Bridge";
@@ -113,6 +113,18 @@ class GraphService {
       })
     );
   };
+
+  public setLayoutConfig(config: Partial<CytoscapeDagreConfig>): void {
+    this._dagreLayoutConfig = {
+      ...this._dagreLayoutConfig,
+      ...config,
+    }
+    this.showAllProjects();
+  }
+
+  public getLayoutConfig(): Partial<CytoscapeDagreConfig> {
+    return this._dagreLayoutConfig;
+  }
 
   public exportToPNG(): Promise<Blob> | undefined {
     if (this._fgGraph) {
