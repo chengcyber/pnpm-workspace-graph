@@ -10,6 +10,8 @@ class GraphService {
   private _bgGraph: cy.Core | undefined;
   private _bridge: BridgeService;
 
+  private _dagreLayoutConfig: Partial<CytoscapeDagreConfig>;
+
   private static instance: GraphService | undefined;
 
   private constructor(containerId: string) {
@@ -17,6 +19,16 @@ class GraphService {
     this._bridge = BridgeService.getInstance();
 
     cy.use(dagre);
+
+    this._dagreLayoutConfig = {
+      name: "dagre",
+      nodeDimensionsIncludeLabels: true,
+      rankSep: 300,
+      // Direction - from Top to Bottom
+      rankDir: "TB",
+      edgeSep: 150,
+      ranker: "network-simplex",
+    }
   }
 
   public static getInstance(): GraphService {
@@ -133,14 +145,8 @@ class GraphService {
     });
 
     this._fgGraph
-      .layout({
-        name: "dagre",
-        nodeDimensionsIncludeLabels: true,
-        rankSep: 75,
-        rankDir: "TB",
-        edgeSep: 50,
-        ranker: "network-simplex",
-      } as CytoscapeDagreConfig)
+      .layout(
+        this._dagreLayoutConfig as CytoscapeDagreConfig)
       .run();
 
     this._fgGraph.fit().center().resize();
