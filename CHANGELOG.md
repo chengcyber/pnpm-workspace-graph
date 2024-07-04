@@ -1,5 +1,11 @@
 # pnpm-workspace-graph
 
+## 0.1.3
+
+### Patch Changes
+
+- 73fb98c: Fix filter settings form lost after reopen
+
 ## 0.1.2
 
 ### Patch Changes
