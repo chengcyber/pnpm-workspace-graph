@@ -1,5 +1,11 @@
 # pnpm-workspace-graph
 
+## 0.2.1
+
+### Patch Changes
+
+- 01c5f06: Update logo
+
 ## 0.2.0
 
 ### Minor Changes
